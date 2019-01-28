@@ -13,3 +13,9 @@ Note about ruby: update structure of note for future convenience.
 
 1/24/2019 Update:
 Learning about ruby: various varibles in ruby and operations.
+
+1/25/2019 Update:
+Learning about ruby: Block
+
+1/27/2019 Update:
+Learning about ruby: Regexp
