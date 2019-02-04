@@ -16,21 +16,21 @@
 ### 3.文本格式化操作
 使用标签&lt;b&gt;&lt;/b&gt;或&lt;i&gt;&lt;/i&gt;对输出的文本进行格式操作，如**加粗**或者*斜体*。这种标签被称为格式化标签,格式化标签在使用时与&lt;p&gt;&lt;/p&gt;一致，替换&lt;p&gt;&lt;/p&gt;使用：
 ```html
-<b>这个文本加粗&lt;/b&gt;
-&lt;strong&gt;这个文本也加粗&lt;/strong&gt;
+<b>这个文本加粗</b>
+<strong>这个文本也加粗</strong>
 
-&lt;big&gt;这个文本放大&lt;big&gt;
-&lt;small&gt;这个文本缩小 &lt;/small&gt;
+<big>这个文本放大<big>
+<small>这个文本缩小 </small>
 
-&lt;i&gt;这个文本斜体&lt;/i&gt;
-&lt;em&gt;这个文本也斜体&lt;/em&gt;
+<i>这个文本斜体</i>
+<em>这个文本也斜体</em>
 
-&lt;p&gt;这个文本有&lt;sup&gt;上标&lt;/sup&gt;以及&lt;sub&gt;下标&lt;/sub&gt;&lt;/p&gt; 
+<p>这个文本有<sup>上标</sup>以及<sub>下标</sub></p> 
 
-&lt;pre&gt;
+<pre>
 空 格
 和空行会完整显现
-&lt;/pre&gt;
+</pre>
 ```
 需要注意，使用上下标的行前后会自动换行，而且现在倾向于使用&lt;strong&gt;&lt;/strong&gt;代替&lt;b&gt;&lt;/b&gt;进行加粗，使用&lt;em&gt;&lt;/em&gt;代替&lt;i&gt;&lt;/i&gt;进行斜体操作。
 &lt;pre&gt; &lt;/pre&gt;标签中的内容的空格和空行会完整保留, 但是字体会缩小。可以导致段落断开的标签（例如标题、&lt;p&gt; 和 &lt;address&gt; 标签）绝不能包含在&lt;pre&gt; 所定义的块里。尽管有些浏览器会把段落结束标签解释为简单地换行，但是这种行为在所有浏览器上并不都是一样的。&lt;pre&gt;元素中允许的文本可以包括物理样式和基于内容的样式变化，还有链接、图像和水平分隔线。当把其他标签（比如 &lt;a&gt; 标签）放到 &lt;pre&gt; 块中时，就像放在 HTML/XHTML 文档的其他部分中一样即可。
@@ -54,7 +54,7 @@
 &lt;abbr&gt;用来表示一个缩写词或者首字母错略词，通过对缩写词语进行标记，您就能够为浏览器、拼写检查程序、翻译系统以及搜索引擎分度器提供有用的信息。某些浏览器中，当您把鼠标移至带有 &lt;abbr&gt; 标签的缩写词/首字母缩略词上时，&lt;abbr&gt; 标签的 title 属性可被用来展示缩写词/首字母缩略词的完整版本。
 
 ```html
-&lt;p&gt;The &lt;abbr title="World Health Organization"&gt;WHO&lt;/abbr&gt; was founded in 1948.&lt;/p&gt;
+<p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>
 ##The WHO was founded in 1948
 ```
 在开始/结束符中间的为缩写。
@@ -66,31 +66,31 @@
 &lt;address&gt; 元素的文本通常呈现为斜体。大多数浏览器会在该元素的前后添加换行。
 但是&lt;addresss&gt;一般不用来表示邮政地址，除非是联系信息的组成部分。
 ```html
-&lt;address&gt;
-Written by &lt;a href="mailto:webmaster@example.com"&gt;Jon Doe&lt;/a&gt;.&lt;br&gt; 
-Visit us at:&lt;br&gt;
-Example.com&lt;br&gt;
-Box 564, Disneyland&lt;br&gt;
+<address>
+Written by <a href="mailto:webmaster@example.com">Jon Doe</a>.<br> 
+Visit us at:<br>
+Example.com<br>
+Box 564, Disneyland<br>
 USA
-&lt;/address&gt;
+</address>
 ```
 上面这个链接的用法，点击显示的"Jon Doe"就会打开链接指向的页面。
 
 ##### 3.链接
 超链接可以是一个词，一幅图像或者是一个网页。
 ```html
-&lt;a href="url"&gt;链接文本&lt;/a&gt;
+<a href="url">链接文本</a>
 ```
 通过**target**属性，可以自由定义被链接的文档再何处显示。
 ```html
-&lt;a href="http://www.runoob.com/" target="_blank"&gt;访问菜鸟教程!&lt;/a&gt; 
-&lt;!--会在新页面中打开 --&gt;
+<a href="http://www.runoob.com/" target="_blank">访问菜鸟教程!</a>; 
+<!--会在新页面中打开 -->;
 ```
 还可以通过**id**链接创建一个HTML文档书签标记，它是隐藏的。
 ```html
-&lt;a id="tips"&gt;这里是书签标记地点&lt;/a&gt;  &lt;!--创建一个链接到“有用的提示部分” --&gt;
-&lt;a href="#tips"&gt;访问有用的提示部分&lt;/a&gt;  &lt;!--点击跳转回去 --&gt;
+<a id="tips">这里是书签标记地点</a>  <!--创建一个链接到“有用的提示部分” -->
+<a href="#tips">访问有用的提示部分</a>  <!--点击跳转回去 -->
 
-&lt;a href="http://www.runoob.com/html/html-links.html#tips"&gt;访问有用的提示部分&lt;/a&gt;
-&lt;!--也可以从别的页面跳回来 --&gt;
+<a href="http://www.runoob.com/html/html-links.html#tips">访问有用的提示部分</a>
+<!--也可以从别的页面跳回来 -->
 ```
