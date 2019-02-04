@@ -16,7 +16,7 @@
 ### 3.文本格式化操作
 使用标签&lt;b&gt;&lt;/b&gt;或&lt;i&gt;&lt;/i&gt;对输出的文本进行格式操作，如**加粗**或者*斜体*。这种标签被称为格式化标签,格式化标签在使用时与&lt;p&gt;&lt;/p&gt;一致，替换&lt;p&gt;&lt;/p&gt;使用：
 ```html
-&lt;b&gt;这个文本加粗&lt;/b&gt;
+<b>这个文本加粗&lt;/b&gt;
 &lt;strong&gt;这个文本也加粗&lt;/strong&gt;
 
 &lt;big&gt;这个文本放大&lt;big&gt;
