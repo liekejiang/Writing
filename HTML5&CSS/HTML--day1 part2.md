@@ -76,12 +76,17 @@ USA
 ```
 上面这个链接的用法，点击显示的"Jon Doe"就会打开链接指向的页面。
 
-##### 3.链接
+##### 3.文本链接
 超链接可以是一个词，一幅图像或者是一个网页。
 ```html
 <a href="url">链接文本</a>
 ```
-通过**target**属性，可以自由定义被链接的文档再何处显示。
+通过**target**属性，可以自由定义被链接的文档再何处显示：
+* target = "_blank" 在一个新的页面打开
+* target = "_top"  在当前的页面打开，显示新页面的顶端
+* target = "_self" 不会在新页面显示，在当前窗口？
+* target = "_partent" 不知道
+
 ```html
 <a href="http://www.runoob.com/" target="_blank">访问菜鸟教程!</a>; 
 <!--会在新页面中打开 -->;
@@ -94,3 +99,110 @@ USA
 <a href="http://www.runoob.com/html/html-links.html#tips">访问有用的提示部分</a>
 <!--也可以从别的页面跳回来 -->
 ```
+##### 4.图片链接
+可以创建一些表现为图片的超链接，图片链接&lt;img&gt;有两个必须的属性，**src**和**alt**。
+**src**属性代表了图象文件的URL, 也就是引用该文件的绝对路径或者相对路径。因此开发者通常会把图像文件存放在一个专门的文件夹里来简化路径。
+而**alt**代表了图片的描述性文本，如果无法显示图象，将用该文本代替图象。**alt**的值使用双引号包括，运行标点和空格
+```html
+<p>创建图片链接:
+<a href="http://www.runoob.com/html/html-tutorial.html">
+<img  border="10" src="smiley.gif" alt="HTML 教程" width="32" height="32"></a></p>
+
+<p>无边框的图片链接:
+<a href="http://www.runoob.com/html/html-tutorial.html">
+<img border="0" src="smiley.gif" alt="HTML 教程" width="32" height="32"></a></p>
+```
+
+### 6. HEAD元素
+&lt;head&gt;元素包含了所有的头部标签元素。在&lt;head&gt;元素中你可以插入脚本（scripts）, 样式文件（CSS），及各种meta信息。可以添加在头部区域的元素标签为: &lt;title&gt;, &lt;style&gt;, &lt;meta&gt;, &lt;link&gt;, &lt;script&gt;, &lt;noscript&gt;, and &lt;base&gt;。
+
+#### HEAD里的&lt;title&gt; 元素
+&lt;title&gt;&lt;/title&gt;定义了不同文档的标题,包括:浏览器工具栏的标题、网页在收藏夹里显示的标题和显示在搜索引擎结构页面的标题
+#### HEAD里的&lt;base&gt; 元素
+&lt;base&gt;标签描述了基本的链接地址/链接目标，该标签作为HTML文档中所有链接标签的默认链接。
+```html
+<head>
+<base href="http://www.runoob.com/images/" target="_blank">
+</head>
+```
+#### HEAD里的&lt;link&gt; 元素（不懂）
+&lt;link&gt; 标签定义了文档与外部资源之间的关系。&lt;link&gt; 标签通常用于链接到样式表:
+```html
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+```
+#### HEAD里的&lt;style&gt; 元素（不懂）
+&lt;style&gt; 标签定义了HTML文档的样式文件引用地址。在&lt;style&gt;元素中你也可以直接添加样式来渲染 HTML 文档:
+```html
+<head>
+<style type="text/css">
+body {background-color:yellow}
+p {color:blue}
+</style>
+</head>
+```
+#### HEAD里的&lt;script&gt; 元素（不懂）
+&lt;script&gt;标签用于加载脚本文件，如： JavaScript。以后会经常使用。
+
+#### HEAD里的&lt;meta&gt; 元素（不懂）
+meta标签描述了一些基本的元数据。&lt;meta&gt;标签提供了元数据,元数据也不显示在页面上，但会被浏览器解析。META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。&lt;meta&gt; 一般放置于 &lt;head&gt; 区域。
+```html
+<!--为搜索引擎定义关键词:-->
+<meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
+
+<!--为网页定义描述内容:-->
+<meta name="description" content="免费 Web & 编程 教程">
+
+<!--定义网页作者:-->
+<meta name="author" content="Runoob">
+
+<!--每30秒钟刷新当前页面:-->
+<meta http-equiv="refresh" content="30">
+```
+
+### HTML与CSS
+CSS(Cascading Style Sheets)用于渲染HTML元素标签的样式，可以通过以下方法添加到HTML中：
+* 内联样式-在HTML元素中使用"stlye"属性。
+* 内部样式表-在HTML文档头部&lt;head&gt;区域使用&lt;style&gt;元素来包含CSS。
+* 外部引用-使用外部CSS文件。
+最推荐的使用方式是外部引用CSS文件。
+
+#### 内联样式
+当特殊的样式需要应用到个别元素的时候，就可以使用内联样式。使用内联样式的方法是在相关的标签中使用样式属性。样式属性可以包含任何CSS属性。
+以下实例显示出如何改变段落的颜色和做外边距。
+```html
+<p style="color:blue;margin-left:20px;">This is a paragraph.</p>
+```
+或者改变段落的颜色和左外边距：
+```html
+<body style="background-color:yellow;">
+<h2 style="background-color:red;">这是一个标题</h2>
+<p style="background-color:green;">这是一个段落。</p>
+</body>
+```
+还可以改变字体的格式、颜色和大小：
+```html
+<h1 style="font-family:verdana;">一个标题</h1>
+<p style="font-family:arial;color:red;font-size:20px;">一个段落。</p>
+```
+
+#### 内部样式表
+当单个文件需要特别样式时，就可以使用内部样式表。你可以在&lt;head&gt;部分通过&lt;style&gt;标签定义内部样式：
+```html
+<head>
+<style type="text/css">
+body {background-color:yellow;}
+p {color:blue;}
+</style>
+</head>
+```
+#### 外部样式表
+当样式需要被应用到很多页面的时候，外部样式表将是理想的选择。使用外部样式表，你就可以通过改变一个文件来改变整个站点的外观。
+```html
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+```
+
+
