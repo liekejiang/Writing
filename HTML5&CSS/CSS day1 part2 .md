@@ -54,4 +54,62 @@ p.capitalize {text-transform:capitalize;}
 p {text-indent:50px;}
 ```
 
+### 字体 font-size
+字体属性包括字体格式(sans-serif)，大小，加粗，文字样式。
+#### 字体样式
+CSS中有两种类型的字体系列名词:
+* 通用字体系列 - 拥有相似外观的字体系统组合(如 “Serif”,"Monospace")
+* 特定字体系列 - 一个特定的字体系列(如 "Times" "Courier")
 
+font-family 属性设置文本的字体系列。在工程中一般会设置多个字体名称作为一种“后备机制”， 如果浏览器不支持第一种字体，将会自动跳转下一种字体。若字体系列名称超过一个字，必须用引号，如Font Family：“宋体”。多个字体使用逗号分隔。
+```css
+p{
+    font-family: "Times New Roman", Times, serif;
+}
+```
+#### 字体格式
+可以设置三种不同的格式：
+* 正常
+* 斜体
+* 倾斜的文字（与斜体有区别, 用的很少)
+
+```css
+p.normal {font-style:normal;}
+p.italic {font-style:italic;}
+p.oblique {font-style:oblique;}
+```
+
+#### 字体大小
+font-size属性设置文本的大小。字体大小可以是相对的或者绝对的，如果不指定大小，默认值即普通文本段落大小为16像素(16px=1em)。
+
+**绝对大小：**
+* 设置一个指定大小的文本
+* 不允许用户在所有浏览器中改变文本大小
+* 确定了输出的物理尺寸时绝对大小很有用
+
+**相对大小**：
+* 相对周围的元素来设置大小
+* 允许用户在浏览器中改变文字大小
+
+```css
+h1 {font-size:40px;}
+h2 {font-size:30px;}
+p {font-size:14px;}
+
+body {font-size:100%;}
+h1 {font-size:2.5em;}
+h2 {font-size:1.875em;}
+p {font-size:0.875em;}
+```
+除了像素px还有另一种单位**em**，(16px=1em)可以有小数。**em*还可以和百分比相结合。
+```css
+h1 {font-size:2.5em;} /* 40px/16=2.5em */
+h2 {font-size:1.875em;} /* 30px/16=1.875em */
+p {font-size:0.875em;} /* 14px/16=0.875em */
+```
+
+#### 其他属性
+* font-weight : 字体粗细
+* font-variant: 字体小写大写字体
+
+### 链接
