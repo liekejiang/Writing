@@ -100,5 +100,74 @@ rails generate controller Articles
 <% end %>
 ```
 
+## 创建模型与迁移
+```ruby
+class ArticlesController < ApplicationController
+  def new
+  end
+  def create
+  end
+end
+```
+因为new只是负责显示表单，实际的创建动作需要**create**来完成，因此我们不能只是简单地定义一个空方法。**create**方法会从表单中获取一些数据，我们首先需要保存这些传过来的这些数据。在MVC模型中，Model主要负责与逻辑层和持久层交互，也是3种元素中唯一与持久层交互的，因此遇到和数据库相关的内容就需要用到**Model**。我们首先需要新建一个**Model**：
+```ruby
+rails genreate model Article title:string text:string
+```
+这里的2个值title和text是表单form_for方法中定义的两个变量，同时也使模型具有字符串类型的title和文本属性的text属性。这两个属性会自动添加到数据库的**articles**表中，并映射到Article模型中。这行命令会创建不少文件，我们着重关注root/app/models/article.rb和root/db/migrate/YYYYMMDDHHMMSS_create_articles.rb，后者负责创建数据库。
+上面提到的YYYYMMDDHHMMSS_create_articles.rb文件是数据库迁移文件，迁移是用于简化创建和修改数据库操作的Ruby类。Rails使用rake命令运行迁移，并且在迁移作用于数据库之后还可以撤销迁移操作。在该文件里会看到这些代码：
+```ruby
+class CreateArticles < ActiveRecord::Migration[5.0]
+  def change
+    create_table :articles do |t|
+      t.string :title
+      t.text :text
+      t.timestamps
+    end
+  end
+end
+```
+上面的迁移创建了change方法，在迁移时会调用这个方法，这些操作都是可逆的。之后进行迁移,会创建Articles表:
+```ruby
+bin/rails db:migrate
+```
+然后修改ArticlesController中的create方法，使用新建的Article模型把数据保存到数据库：
+```ruby
+def create
+  @article = Article.new(params[:article])
+ 
+  @article.save
+  redirect_to @article
+end
+```
+代码的第一行把Rails 模型用相应的属性初始化，它们会自动映射到对应的数据库字段。接下来 @article.save 负责把模型保存到数据库。最后把页面重定向到 show 动作，这个 show 动作我们稍后再定义。在这里我们一定要区别明白：这里修改的都是Article的控制器，而修改用的代码中大写的Article是Model中的方法。此外之所以这里说是show动作，在之前的路由中，article作为前缀的命令对应的方法就是article#show。
+最后我们出于安全性的考虑，也是强制要求，需要为控制器参数设置白名单以避免错误地批量赋值。这里，我们想在 create 动作中合法使用 title 和 text 参数，为此需要使用 require 和 permit 方法。像下面这样修改 create 动作中的一行代码
+```ruby
+@article = Article.new(params.require(:article).permit(:title, :text))
+```
+上述代码通常被抽象为控制器类的一个方法，以便在控制器的多个动作中重用，例如在 create 和 update 动作中都会用到。除了批量赋值问题，为了禁止从外部调用这个方法，通常还要把它设置为 private。最后的代码像下面这样：
+```ruby
+private
+  def article_params
+    params.require(:article).permit(:title, :text)
+  end
+```
+## 显示文章
+现在在Article的Controller模型里添加与show有关的方法(与路由对象有关的方法都在Controller中定义)，我们先康康show对应的路由
+```ruby
+article GET    /articles/:id(.:format)      articles#show
+```
+这其中的id 告诉 Rails 这个路由期望接受 :id 参数，在这里也就是文章的 ID。
+
+TIPS：常见的做法是按照以下顺序在控制器中放置标准的 CRUD 动作：index，show，new，edit，create，update 和 destroy。你也可以按照自己的顺序放置这些动作，但要记住它们都是公开方法，如前文所述，必须放在私有方法之前才能正常工作。
+
+show动作的定义如下：
+```ruby
+class ArticlesController < ApplicationController
+  def show
+    @article = Article.find(params[:id])
+  end
+```
+我们使用Article.find来查找文章，并传入params[:id]以便从中获得：id参数。我们还使用实例变量（前缀为@）保存对文章对象的引用。这样做是因为Rails会把所有实例变量传递给视图。
+
 
 
