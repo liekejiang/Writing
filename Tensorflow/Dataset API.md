@@ -96,7 +96,7 @@ repeat的功能就是将整个序列重复很多次，主要用来处理机器�
 ### 读入磁盘图片于对应的label
 如果我们想读入存放在硬盘中的图片和对应的label，将其打乱组成batch_size = 32的训练样本，epoch=10:
 ```python
-# 函数的功能时将filename对应的图片文件读进来，并缩放到统一的大小
+# 函数的功能是将filename对应的图片文件读进来，并缩放到统一的大小
 def _parse_function(filename, label):
   image_string = tf.read_file(filename)
   image_decoded = tf.image.decode_image(image_string)
@@ -117,4 +117,52 @@ dataset = dataset.map(_parse_function)
 # 此时dataset中的一个元素是(image_resized_batch, label_batch)
 dataset = dataset.shuffle(buffersize=1000).batch(32).repeat(10)
 ```
+在这个过程中，dataset经历三次转变：
+1. 运行`dataset = tf.data.Dataset.from_tensor_slices((filenames, labels))`后，dataset的一个元素是(filename, label)。filename是图片的文件名，label是图片对应的标签。
+2. 之后通过map，将filename对应的图片读入，并缩放为28x28的大小。此时dataset中的一个元素是(image_resized, label)
+3. 最后，`dataset.shuffle(buffersize=1000).batch(32).repeat(10)`的功能是：在每个epoch内将图片打乱组成大小为32的batch，并重复10次。最终，dataset中的一个元素是(image_resized_batch, label_batch)，image_resized_batch的形状为(32, 28, 28, 3)，而label_batch的形状为(32, )，接下来我们就可以用这两个Tensor来建立模型了。
+
+### Dataset的其他创建方法
+除了`tf.data.Dataset.from_tensor_slices`外，目前Dataset API还提供了另外三种创建Dataset方法：
+* `tf.data.TextLineDataset()`：这个函数的输入是一个文件的列表，输出是一个dataset。dataset中的每一个元素就对应了文件中的一行。可以使用这个函数来读入CSV文件。
+* `tf.data.FixedLengthRecordDataset()`：这个函数的输入是一个文件的列表和一个record_bytes，之后dataset的每一个元素就是文件中固定字节数record_bytes的内容。通常用来读取以二进制形式保存的文件，如CIFAR10数据集就是这种形式。
+* `tf.data.TFRecordDataset()`：顾名思义，这个函数是用来读TFRecord文件的，dataset中的每一个元素就是一个TFExample。
+
+### 更多类型的Iterator
+在非Eager模式下，最简单的创建Iterator的方法就是通过dataset.make_one_shot_iterator()来创建一个one shot iterator。除了这种one shot iterator外，还有三个更复杂的Iterator，即：
+
+* initializable iterator
+* reinitializable iterator
+* feedable iterator
+
+##### 1. initializable iterator
+`initializable`必须要在使用前通过`sess.run()`来初始化，可以将placeholder带入iterator中，可以方便我们通过快速定义新的iterator。一个简单的`initializable`实例：
+```python
+limit = tf.placeholder(dtype=tf.int32, shape=[])
+dataset = tf.data.Dataset.from_tensor_slices(tf.range(start=0, limit=limit))
+iterator = dataset.make_initializable_iterator()
+next_element = iterator.get_next()
+ 
+with tf.Session() as sess:
+    sess.run(iterator.initializer, feed_dict={limit: 10})
+    for i in range(10):
+      value = sess.run(next_element)
+      assert i == value
+```
+此时的limit相当于一个“参数”，它规定了Dataset中数的“上限”。initializable iterator还有一个功能：**读入较大的数组**。在使用tf.data.Dataset.from_tensor_slices(array)时，实际上发生的事情是将array作为一个tf.constants保存到了计算图中。当array很大时，会导致计算图变得很大，给传输、保存带来不便。这时，我们可以用一个placeholder取代这里的array，并使用initializable iterator，只在需要时将array传进去，这样就可以避免把大数组保存在图里，示例代码为（来自官方例程）：
+```python
+# 从硬盘中读入两个Numpy数组
+with np.load("/var/data/training_data.npy") as data:
+  features = data["features"]
+  labels = data["labels"]
+ 
+features_placeholder = tf.placeholder(features.dtype, features.shape)
+labels_placeholder = tf.placeholder(labels.dtype, labels.shape)
+ 
+dataset = tf.data.Dataset.from_tensor_slices((features_placeholder, labels_placeholder))
+iterator = dataset.make_initializable_iterator()
+sess.run(iterator.initializer, feed_dict={features_placeholder: features,
+                                          labels_placeholder: labels})
+```
+
 
