@@ -1,21 +1,10 @@
-# Writing
+待看论文：
 
-Plan to writing at least every __two__ day in 2019 
+1. R. B. Girshick, J. Donahue, T. Darrell, and J. Malik. 
+Rich feature hierarchies for accurate object detection and semantic segmentation.
+In Computer Vision and Pattern Recognition, 2014. CVPR 2014. IEEE Conference on, 2014.
 
-1/21/2019 Update:
-Learning about git and ruby
+理由： 瓶颈层的使用
 
-1/22/2019 Update:
-Learning about git: how to update remote repo to local repo
 
-1/23/2019 Update:
-Note about ruby: update structure of note for future convenience.
 
-1/24/2019 Update:
-Learning about ruby: various varibles in ruby and operations.
-
-1/25/2019 Update:
-Learning about ruby: Block
-
-1/27/2019 Update:
-Learning about ruby: Regexp
