@@ -1,21 +1,14 @@
-# Writing
+## Introduction
+介绍了近年来（15年）神经网络的发展情况，指出由于嵌入式和移动平台的兴起，比起效果上纯粹的数字提升，参数数量以及效率的重要性如今更加值得关注。本文提出的**Inception**就着重关注这一方面。
 
-Plan to writing at least every __two__ day in 2019 
+自从VGG出现之后，大家都在研究如何把网络做的更深并利用深度去提升效果。而在**Inception**中，**DEEP**除了指网络结构的深度外，还代表了本文提出的具有全新组织模式的**Inception Module** 。
 
-1/21/2019 Update:
-Learning about git and ruby
+## Related Work
+文章指出自**LeNet**以来，大部分的结构上的创新都是卷机层，池化层和最新的BN层的各种组合，但是这些组合也创造出了迄今为止图象识别的最佳记录。而在大数据集的处理方面，增加卷机层和每层filters的数量，以及**dropout**成为防止过拟合的主流方法。
 
-1/22/2019 Update:
-Learning about git: how to update remote repo to local repo
+尽管最大池化层会造成空间信息方面的损失，但是这些网络结构还是成功地应用于定位，物体识别和人体姿势预测。
 
-1/23/2019 Update:
-Note about ruby: update structure of note for future convenience.
+从神经科学的的研究成功--灵长类大脑视觉皮层模型收到启发，有人使用了一系列大小不一的滤波器去处理多尺度模型，我们的**Inception**也从中获得灵感。但是在**Inception**模型中，所有**filter**都是经过多次学习得到的（感觉是废话）。
 
-1/24/2019 Update:
-Learning about ruby: various varibles in ruby and operations.
+（重点）Network-in-Network[12]被提出用于增加网络模型的表达能力，我们发现其中使用的瓶颈层`1*1的卷机层，在DenseNet，ResNet中都有使用`增加了模型的深度（然后抢了过来）。在我们的**Inception**模型中使用瓶颈层有两个目的：①是增加网络的深度②是在没有太多惩罚的情况下增加网络宽度。
 
-1/25/2019 Update:
-Learning about ruby: Block
-
-1/27/2019 Update:
-Learning about ruby: Regexp
